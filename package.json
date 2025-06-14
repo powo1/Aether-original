@@ -1,21 +1,41 @@
 {
+  "name": "aether-original",
+  "version": "1.0.0",
+  "type": "module",
   "scripts": {
     "check-port:backend": "node scripts/check-port.cjs 3000",
     "check-port:frontend": "node scripts/check-port.cjs 5173",
     "start": "npm run check-port:backend && nodemon backend/index.js",
     "frontend": "npm run check-port:frontend && cd frontend && npm start",
-    "dev": "concurrently \"npm run frontend\" \"npm start\""
+    "dev": "concurrently \"npm run frontend\" \"npm start\"",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "test": "jest"
   },
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.21.2",
     "pdf-lib": "^1.17.1",
     "puppeteer": "^24.10.1",
-    "sqlite3": "^5.1.6"
+    "sqlite3": "^5.1.6",
+    "compression": "^1.7.4",
+    "helmet": "^7.1.0",
+    "express-rate-limit": "^7.1.5",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "concurrently": "^9.1.2",
-    "nodemon": "^3.1.0"
+    "nodemon": "^3.1.0",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "prettier": "^3.1.1",
+    "jest": "^29.7.0",
+    "supertest": "^6.3.3"
   },
-  "type": "module"
+  "engines": {
+    "node": ">=18.0.0"
+  }
 }

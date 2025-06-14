@@ -8,9 +8,9 @@
     "start": "npm run check-port:backend && nodemon backend/index.js",
     "frontend": "npm run check-port:frontend && cd frontend && npm start",
     "dev": "concurrently \"npm run frontend\" \"npm start\"",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "format": "prettier --write .",
+    "lint": "eslint . --config config/.eslintrc.json",
+    "lint:fix": "eslint . --config config/.eslintrc.json --fix",
+    "format": "prettier --write . --config config/.prettierrc",
     "test": "jest"
   },
   "dependencies": {

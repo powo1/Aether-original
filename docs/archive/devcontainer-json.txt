@@ -5,10 +5,10 @@
     "cpus": 4
   },
 
-  "workspaceFolder": "/workspaces/Aether-original",
+  "workspaceFolder": "/workspaces/aetherpress",
 
   "waitFor": "onCreateCommand",
-  "updateContentCommand": "sudo apt-get update && sudo apt-get install -y --no-install-recommends wget gnupg ca-certificates fonts-liberation libappindicator3-1 libasound2 libatk-bridge2.0-0 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 libexpat1 libfontconfig1 libgbm1 libgcc1 libglib2.0-0 libgtk-3-0 libnspr4 libnss3 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 lsb-release xdg-utils build-essential python3 make gcc g++ sqlite3 libsqlite3-dev",
+  "updateContentCommand": "sudo apt-get update && sudo apt-get install -y --no-install-recommends wget gnupg ca-certificates fonts-liberation libappindicator3-1 libasound2 libatk-bridge2.0-0 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 libexpat1 libfontconfig1 libgbm1 libgcc1 libglib2.0-0 libgtk-3-0 libnspr4 libnss3 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 lsb-release xdg-utils",
   "postCreateCommand": "npm install && npm install -g pnpm && pnpm install puppeteer",
   "postAttachCommand": "npm run dev",
   "postStartCommand": "cd ./frontend && npm run dev; cd ../backend && npm run dev &",
@@ -56,15 +56,17 @@
     }
   },
 
-  "forwardPorts": [5173, 3000],
   "portsAttributes": {
     "5173": {
-      "label": "Vite/React FE"
+      "label": "Vite/React FE",
+      "onAutoForward": "openPreview"
     },
     "3000": {
-      "label": "Express/Node.js BE"
+      "label": "Express/Node.js BE",
+      "onAutoForward": "openPreview"
     }
   },
+  "forwardPorts": [5173, 3000],
 
   "remoteUser": "node"
 }

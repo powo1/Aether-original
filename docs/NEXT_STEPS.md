@@ -1,41 +1,53 @@
-# NEXT STEPS: Implementation Plan
+# NEXT_STEPS: Core Infrastructure Implementation Plan
 
-## Task: Express Server Initialization
+## 1. Express Server (Already Implemented)
 
-### Goal
+- **Status:** Complete
 
-Establish a foundational Express server to handle HTTP requests and serve as the backend for the AetherPress prototype.
+## 2. React Frontend
 
-### Implementation Steps
+**Goal:** Establish a functional React frontend that communicates with the backend and provides a foundation for UI/UX.
 
-1. **Create Entry Point**
+**Steps:**
 
-   - File: `backend/index.js`
-   - Set up a basic Express app instance.
-   - Configure the app to listen on a configurable port (default: 3000).
+- Set up the React app structure in `/frontend`.
+- Implement a basic App component and folder structure for components, assets, and styles.
+- Integrate state management (e.g., useState, useContext, or Redux if needed).
+- Implement API integration for backend communication (e.g., fetch or axios).
+- Add error handling for API calls and UI feedback.
+- Create a minimal UI/UX for initial user interaction.
 
-2. **Add Health Check Endpoint**
+**Acceptance Criteria:**
 
-   - Implement a simple GET `/health` endpoint that returns a status message (e.g., `{ status: 'ok' }`).
-   - This will be used to verify the server is running.
+- App starts with `npm start` in `/frontend`.
+- Can successfully call backend endpoints and display results.
+- Handles errors gracefully and displays user-friendly messages.
 
-3. **Logging**
+---
 
-   - Add basic console logging for server startup and incoming requests.
+## 3. Database Setup
 
-4. **Environment Configuration**
-   - Use environment variables for port and environment (development/production).
-   - Document required environment variables in a `.env.example` file.
+**Goal:** Ensure reliable data persistence using SQLite.
 
-### Acceptance Criteria
+**Steps:**
 
-- The server starts without errors using `node backend/index.js`.
-- The `/health` endpoint returns a 200 status and `{ status: 'ok' }`.
-- The port can be configured via environment variable.
-- Startup and request logs appear in the console.
+- Initialize SQLite database in `/data`.
+- Design and document the schema for required tables.
+- Implement a migration system or script for schema updates.
+- Implement basic CRUD operations in the backend (create, read, update, delete).
+- Add error handling for all database operations.
 
-### Notes
+**Acceptance Criteria:**
 
-- This is the foundation for all further backend development.
-- No middleware, error handling, or advanced features are included in this step.
-- Next steps will build on this base (middleware, error handling, CORS, etc.).
+- Database file exists and is accessible.
+- All required tables are present and correctly structured.
+- CRUD operations work as expected and handle errors.
+
+---
+
+**General Guidance:**
+
+- For each task, start by reviewing what (if anything) is already implemented.
+- Use the status assessment checklist from ISSUES.md to verify or plan each step.
+- Document findings and next steps before moving to implementation.
+- After implementation, test thoroughly and update documentation.

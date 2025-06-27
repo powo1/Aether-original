@@ -1,5 +1,5 @@
 {
-  "name": "AetherPress Prototype V1.Alpha",
+  "name": "AetherPress Prototype Alpha V0.1",
   "image": "mcr.microsoft.com/devcontainers/javascript-node:18-bullseye",
   "hostRequirements": {
     "cpus": 4
@@ -26,16 +26,17 @@
       "extensions": [
         "dbaeumer.vscode-eslint",
         "esbenp.prettier-vscode",
+        "humao.rest-client",
+        "prisma.prisma",
         "github.copilot",
         "github.copilot-chat",
-        "ms-azuretools.vscode-docker",
-        "ms-vscode.vscode-node-azure-pack",
-        "humao.rest-client",
-        "vscode-icons-team.vscode-icons",
-        "prisma.prisma",
-        "cweijan.vscode-postgresql-client2",
+        "gitHub.vscode-github-actions",
         "ms-vscode.vscode-typescript-next",
+        "ms-vscode.vscode-node-azure-pack",
         "ms-azuretools.vscode-postgresql",
+        "ms-azuretools.vscode-docker",
+        "vscode-icons-team.vscode-icons",
+        "cweijan.vscode-postgresql-client2",
         "bradlc.vscode-tailwindcss",
         "formulahendry.auto-rename-tag",
         "dsznajder.es7-react-js-snippets"

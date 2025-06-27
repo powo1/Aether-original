@@ -8,7 +8,6 @@ Welcome to the AetherPress prototype! This project demonstrates the foundational
 - `/frontend` — React frontend
 - `/data` — SQLite database
 - `/samples` — Sample files (e.g., PNGS, PDFs)
-- `/tests` — Test files
 
 ## Features
 

@@ -6,30 +6,33 @@ import path from "path";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+// Use environment variable for DB path, fallback to default
+const dbPath =
+  process.env.AETHERPRESS_DB_PATH ||
+  path.resolve(__dirname, "../data/aetherpress.db");
+
 // Initialize database connection
-const db = new sqlite3.Database(
-  path.resolve(__dirname, "../data/aetherpress.db"),
-  (err) => {
-    if (err) {
-      console.error("Error opening database:", err.message);
-    } else {
-      console.log("Connected to the SQLite database.");
-      db.run(
-        `CREATE TABLE IF NOT EXISTS content (
+const db = new sqlite3.Database(dbPath, (err) => {
+  if (err) {
+    console.error("Error opening database:", err.message);
+  } else {
+    console.log(`Connected to the SQLite database at ${dbPath}`);
+    db.run(
+      `CREATE TABLE IF NOT EXISTS content (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       key TEXT UNIQUE,
       value TEXT
     )`,
-        (err) => {
-          if (err) {
-            console.error("Error creating table:", err.message);
-          }
+      (err) => {
+        if (err) {
+          console.error("Error creating table:", err.message);
         }
-      );
+      },
+    );
 
-      // Create documents table
-      db.run(
-        `CREATE TABLE IF NOT EXISTS documents (
+    // Create documents table
+    db.run(
+      `CREATE TABLE IF NOT EXISTS documents (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT NOT NULL,
         content TEXT NOT NULL,
@@ -37,17 +40,16 @@ const db = new sqlite3.Database(
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )`,
-        (err) => {
-          if (err) {
-            console.error("Error creating documents table:", err.message);
-          } else {
-            console.log("Documents table ready");
-          }
+      (err) => {
+        if (err) {
+          console.error("Error creating documents table:", err.message);
+        } else {
+          console.log("Documents table ready");
         }
-      );
-    }
+      },
+    );
   }
-);
+});
 
 // Database operations
 function saveToDatabase(key, value) {

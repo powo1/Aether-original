@@ -2,6 +2,14 @@
 
 Welcome to the AetherPress prototype! This project demonstrates the foundational architecture for a quick-build prototype of AetherPress, focusing on the core loop: Prompt -> AI Processing -> Preview -> Basic Override -> PDF Export.
 
+## Unified Testing & Module System (Summary)
+
+- **Frontend tests:** Powered by Jest for seamless React development.
+- **Backend tests:** Powered by Vitest for fast, modern Node.js/TypeScript workflows.
+- **Module System:** ES Modules (ESM) are used everywhere for native async/await, better optimization, and consistent import/export syntax across the stack.
+
+For details, see [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## Project Structure
 
 - `/backend` — All backend code (Express server, modules, templates)

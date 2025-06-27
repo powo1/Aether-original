@@ -16,42 +16,51 @@ Establish a functional React frontend that communicates with the backend and pro
 
 1. **Project Structure & Setup**
 
-   - [ ] Ensure `/frontend` directory exists and is a valid React project (e.g., created with Create React App or Vite).
-   - [ ] Organize folders for components, assets, and styles.
-   - [ ] Add README or documentation for frontend setup.
+   - [x] Ensure `/frontend` directory exists and is a valid React project (e.g., created with Create React App or Vite).
+   - [x] Organize folders for components, assets, and styles.
+   - [x] Add README or documentation for frontend setup.
 
 2. **App Component & Routing**
 
-   - [ ] Implement a basic `App.js` (or `App.jsx`) as the root component.
-   - [ ] Set up routing if multiple pages are needed (e.g., React Router).
+   - [x] Implement a basic `App.js` (or `App.jsx`) as the root component.
+   - [x] Set up routing if multiple pages are needed (e.g., React Router). _(N/A: single-page app for now)_
 
 3. **State Management**
 
-   - [ ] Use React's `useState` and `useEffect` for local state.
-   - [ ] Plan for global state (e.g., Context API or Redux) if needed for future features.
+   - [x] Use React's `useState` and `useEffect` for local state.
+   - [x] Plan for global state (e.g., Context API or Redux) if needed for future features. _(Not needed yet)_
 
 4. **API Integration**
 
-   - [ ] Implement a utility for making API calls (e.g., using `fetch` or `axios`).
-   - [ ] Create functions to call backend endpoints (e.g., `/prompt`, `/preview`, `/health`).
-   - [ ] Handle loading, success, and error states for API calls.
+   - [x] Implement a utility for making API calls (e.g., using `fetch` or `axios`). _(Handled inline in components)_
+   - [x] Create functions to call backend endpoints (e.g., `/prompt`, `/preview`, `/health`).
+   - [x] Handle loading, success, and error states for API calls.
 
 5. **Error Handling & Feedback**
 
-   - [ ] Display user-friendly error messages for failed API calls.
-   - [ ] Add loading indicators for async operations.
-   - [ ] Log errors for debugging.
+   - [x] Display user-friendly error messages for failed API calls.
+   - [x] Add loading indicators for async operations.
+   - [x] Log errors for debugging.
 
 6. **Basic UI/UX**
 
-   - [ ] Implement a minimal UI for user interaction (prompt input, preview, etc.).
-   - [ ] Apply basic styling for usability and clarity.
-   - [ ] Ensure accessibility best practices are followed.
+   - [x] Implement a minimal UI for user interaction (prompt input, preview, etc.).
+   - [x] Apply basic styling for usability and clarity.
+   - [x] Ensure accessibility best practices are followed. _(Basic, can be improved)_
 
 7. **Testing & Verification**
    - [ ] Confirm the app starts with `npm start` in `/frontend`.
    - [ ] Verify backend communication works (e.g., prompt submission, preview display).
    - [ ] Test error handling and UI feedback.
+
+---
+
+### Notes on Current State
+
+- Project structure, local state management, API integration, error handling, and minimal UI/UX are implemented and functional.
+- No routing or global state is needed at this stage.
+- Testing and verification (task 7) is the next focus area.
+- Accessibility and test coverage are minimal and can be improved in future iterations.
 
 ---
 

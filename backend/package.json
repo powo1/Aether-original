@@ -10,6 +10,7 @@
     "vitest": "^1.0.0"
   },
   "dependencies": {
+    "express": "^5.1.0",
     "puppeteer": "^24.11.2",
     "sqlite3": "^5.1.2"
   }

@@ -4,6 +4,7 @@ import fs from "fs";
 import path from "path";
 import sqlite3Pkg from "sqlite3";
 import { fileURLToPath } from "url";
+import { describe, test, beforeAll } from "vitest";
 
 const sqlite3 = sqlite3Pkg.verbose();
 const __filename = fileURLToPath(import.meta.url);
@@ -28,6 +29,12 @@ function waitForFile(filePath, timeout = 3000) {
 
 describe("Schema Creation", () => {
   beforeAll(() => {
+    // Ensure the data/ directory exists before test
+    const dataDir = path.dirname(DB_PATH);
+    if (!fs.existsSync(dataDir)) {
+      fs.mkdirSync(dataDir, { recursive: true });
+    }
+    // Only remove the database file, never the directory
     if (fs.existsSync(DB_PATH)) {
       fs.unlinkSync(DB_PATH);
     }

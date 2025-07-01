@@ -1,0 +1,15 @@
+{
+  "name": "aetherpress-backend",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "test": "vitest run",
+    "dev": "node index.js"
+  },
+  "devDependencies": {
+    "vitest": "^1.0.0"
+  },
+  "dependencies": {
+    "sqlite3": "^5.1.2"
+  }
+}

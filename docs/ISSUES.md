@@ -18,13 +18,14 @@ Establish a robust and maintainable database layer that supports all required ba
 
    - [x] Choose and configure the database system (e.g., SQLite, PostgreSQL, MySQL). _(SQLite in use)_
    - [x] Ensure the database file or server is created and accessible. _(data/aetherpress.db is created if missing)_
-   - [ ] Add database connection logic to the backend (using environment variables for credentials/paths). _(Currently hardcoded path; could be improved)_
+   - [x] Add database connection logic to the backend (using environment variables for credentials/paths). _(AETHERPRESS_DB_PATH supported)_
 
 2. **Schema Definition & Migration**
 
    - [x] Define the database schema (tables, columns, types, indexes). _(Schema defined in assemblyModule.js)_
    - [x] Implement migration scripts or logic to create/update the schema. _(Tables created on startup; no migration scripts yet)_
    - [x] Test schema creation on a fresh setup. _(Tables auto-create if missing)_
+   - [ ] TODO: Update tests and backend to only remove the database file (not the data/ directory), and to create the data/ directory if missing, with zero risk of deleting anything else. This will ensure no unintended file or directory deletions and keep the repo clean.
 
 3. **CRUD Operations**
 
@@ -53,7 +54,7 @@ Establish a robust and maintainable database layer that supports all required ba
 ### Notes on Current State
 
 - SQLite is in use, with schema and CRUD logic implemented.
-- Database path is hardcoded; environment variable support is a possible improvement.
+- Database path is now configurable via environment variable.
 - No migration or seeding scripts yet; tables are auto-created on startup.
 - Validation and constraints exist but can be expanded.
 - Testing and verification are ongoing.

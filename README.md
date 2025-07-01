@@ -33,22 +33,19 @@ For details, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ### Backend
 
-1. From the project root, start the backend server:
+1. From `./backend/`, start the backend server:
    ```bash
    npm start
    ```
-   (This runs the Express server from `/backend/index.js`.)
+   (This runs the Express server from `/index.js`.)
 
 ### Frontend
 
-1. Navigate to the `frontend` directory:
-   ```bash
-   cd /workspaces/codespaces-express/frontend
-   ```
-2. Start the React development server:
+1. From `./frontend`, start the frontend server:
    ```bash
    npm start
    ```
+   (This runs the React development server from `/index.js`.)
 
 ### Access the Application
 
@@ -89,11 +86,11 @@ For details, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Future Enhancements
 
-- Implement asynchronous processing for better performance.
 - Enhance the UI for a more interactive user experience.
 - Integrate real AI services for text and image generation.
-- Add user authentication and session management.
 - Expand database schema for more complex workflows.
+- Implement asynchronous processing for better performance.
+- Add user authentication and session management.
 
 ## Implementation Notes
 
@@ -103,6 +100,7 @@ For details, see [CONTRIBUTING.md](CONTRIBUTING.md).
   - Simpler implementation
   - ES Module compatible
   - Basic text and layout support
+  
 - **Production**: Planned migration to Puppeteer
   - Advanced HTML rendering
   - Custom layouts and styling

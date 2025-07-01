@@ -41,8 +41,8 @@ Establish a robust and maintainable database layer that supports all required ba
 
 5. **Seeding & Sample Data (Optional)**
 
-   - [ ] Provide scripts or logic to seed the database with initial/sample data for development/testing.
-   - [ ] Verify that seeding works and data appears as expected.
+   - [x] Provide scripts or logic to seed the database with initial/sample data for development/testing.
+   - [x] Verify that seeding works and data appears as expected.
 
 6. **Testing & Verification**
    - [ ] Write and run tests to verify all database operations.

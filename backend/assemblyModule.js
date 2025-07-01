@@ -156,7 +156,7 @@ function getDocument(id) {
     const query = `SELECT * FROM documents WHERE id = ?`;
     db.get(query, [id], (err, row) => {
       if (err) reject(err);
-      else resolve(row);
+      else resolve(row === undefined ? null : row);
     });
   });
 }

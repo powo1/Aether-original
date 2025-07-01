@@ -30,11 +30,13 @@ function waitForFile(filePath, timeout = 3000) {
 describe("Schema Creation", () => {
   beforeAll(() => {
     // Ensure the data/ directory exists before test
+    // This prevents accidental deletion of the directory and ensures only the database file is removed.
     const dataDir = path.dirname(DB_PATH);
     if (!fs.existsSync(dataDir)) {
       fs.mkdirSync(dataDir, { recursive: true });
     }
     // Only remove the database file, never the directory
+    // This is a safety measure to avoid unintended data loss.
     if (fs.existsSync(DB_PATH)) {
       fs.unlinkSync(DB_PATH);
     }
@@ -60,7 +62,7 @@ describe("Schema Creation", () => {
             }
           }
           resolve();
-        },
+        }
       );
     });
     db.close();

@@ -25,7 +25,7 @@ Establish a robust and maintainable database layer that supports all required ba
    - [x] Define the database schema (tables, columns, types, indexes). _(Schema defined in assemblyModule.js)_
    - [x] Implement migration scripts or logic to create/update the schema. _(Tables created on startup; no migration scripts yet)_
    - [x] Test schema creation on a fresh setup. _(Tables auto-create if missing)_
-   - [ ] TODO: Update tests and backend to only remove the database file (not the data/ directory), and to create the data/ directory if missing, with zero risk of deleting anything else. This will ensure no unintended file or directory deletions and keep the repo clean.
+   - [x] TODO: Update tests and backend to only remove the database file (not the data/ directory), and to create the data/ directory if missing, with zero risk of deleting anything else. This will ensure no unintended file or directory deletions and keep the repo clean.
 
 3. **CRUD Operations**
 
@@ -35,9 +35,9 @@ Establish a robust and maintainable database layer that supports all required ba
 
 4. **Data Validation & Integrity**
 
-   - [ ] Add validation for data before writing to the database. _(Some validation exists, can be expanded)_
-   - [ ] Enforce constraints (e.g., unique fields, foreign keys). _(Unique title enforced; more constraints possible)_
-   - [ ] Test that invalid data is rejected and errors are handled gracefully.
+   - [x] Add validation for data before writing to the database. _(Some validation exists, can be expanded)_
+   - [x] Enforce constraints (e.g., unique fields, foreign keys). _(Unique title enforced; more constraints possible)_
+   - [x] Test that invalid data is rejected and errors are handled gracefully.
 
 5. **Seeding & Sample Data (Optional)**
 

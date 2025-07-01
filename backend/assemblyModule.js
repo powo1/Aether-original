@@ -7,56 +7,74 @@ import fs from "fs";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Use environment variable for DB path, fallback to default
-const dbPath =
-  process.env.AETHERPRESS_DB_PATH ||
-  path.resolve(__dirname, "../data/aetherpress.db");
+let db = null;
 
-// Ensure the data/ directory exists before creating the database file
-const dataDir = path.dirname(dbPath);
-if (!fs.existsSync(dataDir)) {
-  fs.mkdirSync(dataDir, { recursive: true });
+function getDbPath() {
+  return (
+    process.env.AETHERPRESS_DB_PATH ||
+    path.resolve(__dirname, "../data/aetherpress.db")
+  );
 }
 
-// Initialize database connection
-const db = new sqlite3.Database(dbPath, (err) => {
-  if (err) {
-    console.error("Error opening database:", err.message);
-  } else {
-    console.log(`Connected to the SQLite database at ${dbPath}`);
-    db.run(
-      `CREATE TABLE IF NOT EXISTS content (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      key TEXT UNIQUE,
-      value TEXT
-    )`,
-      (err) => {
-        if (err) {
-          console.error("Error creating table:", err.message);
-        }
-      }
-    );
+async function initializeDatabase() {
+  const dbPath = getDbPath();
 
-    // Create documents table
-    db.run(
-      `CREATE TABLE IF NOT EXISTS documents (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT NOT NULL,
-        content TEXT NOT NULL,
-        preview_html TEXT,
-        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-      )`,
-      (err) => {
-        if (err) {
-          console.error("Error creating documents table:", err.message);
-        } else {
-          console.log("Documents table ready");
-        }
-      }
-    );
+  // Ensure the data/ directory exists
+  const dataDir = path.dirname(dbPath);
+  if (!fs.existsSync(dataDir)) {
+    fs.mkdirSync(dataDir, { recursive: true });
   }
-});
+
+  // Close existing connection if any
+  if (db) {
+    await new Promise((resolve) => db.close(() => resolve()));
+  }
+
+  // Create new connection
+  db = new sqlite3.Database(
+    dbPath,
+    sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE
+  );
+
+  return new Promise((resolve, reject) => {
+    db.serialize(() => {
+      db.run(
+        `CREATE TABLE IF NOT EXISTS content (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          key TEXT UNIQUE,
+          value TEXT
+        )`,
+        (err) => {
+          if (err) {
+            console.error("Error creating table:", err.message);
+            reject(err);
+            return;
+          }
+
+          db.run(
+            `CREATE TABLE IF NOT EXISTS documents (
+              id INTEGER PRIMARY KEY AUTOINCREMENT,
+              title TEXT NOT NULL UNIQUE CHECK(length(title) <= 255),
+              content TEXT NOT NULL,
+              preview_html TEXT,
+              created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+              updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            )`,
+            (err) => {
+              if (err) {
+                console.error("Error creating documents table:", err.message);
+                reject(err);
+              } else {
+                console.log("Database initialized successfully");
+                resolve();
+              }
+            }
+          );
+        }
+      );
+    });
+  });
+}
 
 // Database operations
 function saveToDatabase(key, value) {
@@ -143,7 +161,28 @@ function getDocument(id) {
   });
 }
 
-function updateDocument(id, title, content) {
+async function updateDocument(id, title, content) {
+  // Validation: required fields
+  if (!title?.trim() || !content?.trim()) {
+    throw new Error("Title and content are required");
+  }
+  // Validation: type and length (example: title max 255 chars)
+  if (typeof title !== "string" || typeof content !== "string") {
+    throw new Error("Title and content must be strings");
+  }
+  if (title.length > 255) {
+    throw new Error("Title must be 255 characters or less");
+  }
+  // Validation: unique title (if changing title)
+  const existing = await new Promise((resolve, reject) => {
+    db.get("SELECT id FROM documents WHERE title = ?", [title], (err, row) => {
+      if (err) reject(err);
+      else resolve(row);
+    });
+  });
+  if (existing && existing.id !== id) {
+    throw new Error("A document with this title already exists");
+  }
   return new Promise((resolve, reject) => {
     const query = `UPDATE documents SET title = ?, content = ?, 
                   updated_at = CURRENT_TIMESTAMP WHERE id = ?`;
@@ -174,6 +213,46 @@ function listDocuments() {
   });
 }
 
+// Add a function to (re-)initialize the schema for testing
+function initializeSchema() {
+  return new Promise((resolve, reject) => {
+    db.serialize(() => {
+      db.run(
+        `CREATE TABLE IF NOT EXISTS content (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          key TEXT UNIQUE,
+          value TEXT
+        )`,
+        (err) => {
+          if (err) return reject(err);
+          db.run(
+            `CREATE TABLE IF NOT EXISTS documents (
+              id INTEGER PRIMARY KEY AUTOINCREMENT,
+              title TEXT NOT NULL UNIQUE CHECK(length(title) <= 255),
+              content TEXT NOT NULL,
+              preview_html TEXT,
+              created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+              updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            )`,
+            (err2) => {
+              if (err2) return reject(err2);
+              resolve();
+            }
+          );
+        }
+      );
+    });
+  });
+}
+
+async function closeDatabase() {
+  if (db) {
+    await new Promise((resolve) => db.close(() => resolve()));
+    db = null;
+  }
+}
+
+// Export getDbPath for test usage
 export {
   saveToDatabase,
   fetchFromDatabase,
@@ -182,4 +261,8 @@ export {
   updateDocument,
   deleteDocument,
   listDocuments,
+  initializeDatabase,
+  closeDatabase,
+  initializeSchema, // export for test usage
+  getDbPath,
 };

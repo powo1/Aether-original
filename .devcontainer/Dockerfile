@@ -13,4 +13,21 @@ RUN sudo apt-get update && sudo apt-get install -y --no-install-recommends \
     libxrandr2 libxrender1 libxss1 libxtst6 lsb-release xdg-utils \
     # Other useful tools
     build-essential python3 make gcc g++ sqlite3 libsqlite3-dev \
-    && sudo apt-get clean && sudo rm -rf /var/lib/apt/lists/*
+    # Playwright browser dependencies
+    libwoff1 \
+    libopus0 \
+    libflite1 \
+    libharfbuzz-icu0 \
+    libenchant-2-2 \
+    libsecret-1-0 \
+    libhyphen0 \
+    libmanette-0.2-0 \
+    libdw1 \
+    libegl1 \
+    libglx0 \
+    libgudev-1.0-0 \
+    libgles2 \
+    libx264-155 \
+    libx264-dev \
+    --no-install-recommends && \
+    sudo apt-get clean && sudo rm -rf /var/lib/apt/lists/*

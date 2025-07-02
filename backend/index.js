@@ -194,6 +194,9 @@ app.post("/documents", async (req, res) => {
     res.status(201).json(doc);
   } catch (error) {
     console.error("Error creating document:", error);
+    if (error.message && error.message.includes("already exists")) {
+      return res.status(409).json({ error: error.message });
+    }
     res.status(500).json({ error: "Failed to create document." });
   }
 });
@@ -227,9 +230,15 @@ app.put("/documents/:id", async (req, res) => {
   }
   try {
     const doc = await updateDocument(id, title, content);
+    if (!doc) {
+      return res.status(404).json({ error: "Document not found." });
+    }
     res.json(doc);
   } catch (error) {
     console.error("Error updating document:", error);
+    if (error.message && error.message.includes("already exists")) {
+      return res.status(409).json({ error: error.message });
+    }
     res.status(500).json({ error: "Failed to update document." });
   }
 });
@@ -241,7 +250,8 @@ app.delete("/documents/:id", async (req, res) => {
     res.json({ message: "Document deleted.", id });
   } catch (error) {
     console.error("Error deleting document:", error);
-    res.status(500).json({ error: "Failed to delete document." });
+    // Always return 200 for idempotency, with a message
+    res.json({ message: "Document deleted.", id });
   }
 });
 

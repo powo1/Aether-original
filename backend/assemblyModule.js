@@ -180,14 +180,15 @@ async function updateDocument(id, title, content) {
       else resolve(row);
     });
   });
-  if (existing && existing.id !== id) {
+  if (existing && existing.id !== Number(id)) {
     throw new Error("A document with this title already exists");
   }
   return new Promise((resolve, reject) => {
     const query = `UPDATE documents SET title = ?, content = ?, 
                   updated_at = CURRENT_TIMESTAMP WHERE id = ?`;
-    db.run(query, [title, content, id], (err) => {
+    db.run(query, [title, content, id], function (err) {
       if (err) reject(err);
+      else if (this.changes === 0) resolve(null); // Not found
       else resolve({ id, title, content });
     });
   });

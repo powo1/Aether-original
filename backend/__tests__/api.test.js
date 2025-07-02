@@ -81,4 +81,62 @@ describe("API Integration: Document CRUD", () => {
     const get = await request(app).get(`/documents/${id}`);
     expect(get.status).toBe(404);
   });
+
+  it("POST /documents with missing fields returns 400", async () => {
+    const res = await request(app)
+      .post("/documents")
+      .send({ title: "", content: "" });
+    expect(res.status).toBe(400);
+    expect(res.body.error).toMatch(/required/);
+  });
+
+  it("POST /documents with duplicate title returns 409", async () => {
+    await request(app)
+      .post("/documents")
+      .send({ title: "DupTitle", content: "A" });
+    const res = await request(app)
+      .post("/documents")
+      .send({ title: "DupTitle", content: "B" });
+    expect(res.status).toBe(409);
+    expect(res.body.error).toMatch(/exists/);
+  });
+
+  it("GET /documents/:id with non-existent id returns 404", async () => {
+    const res = await request(app).get("/documents/9999");
+    expect(res.status).toBe(404);
+    expect(res.body.error).toMatch(/not found/);
+  });
+
+  it("PUT /documents/:id with invalid data returns 400", async () => {
+    const create = await request(app)
+      .post("/documents")
+      .send({ title: "ToUpdate", content: "Old" });
+    const id = create.body.id;
+    const res = await request(app)
+      .put(`/documents/${id}`)
+      .send({ title: "", content: "" });
+    expect(res.status).toBe(400);
+    expect(res.body.error).toMatch(/required/);
+  });
+
+  it("PUT /documents/:id with non-existent id returns 404", async () => {
+    const res = await request(app)
+      .put("/documents/9999")
+      .send({ title: "X", content: "Y" });
+    expect(res.status).toBe(404);
+    expect(res.body.error).toMatch(/not found/);
+  });
+
+  it("DELETE /documents/:id with non-existent id returns 200", async () => {
+    // Should still return 200 for idempotency
+    const res = await request(app).delete("/documents/9999");
+    expect(res.status).toBe(200);
+    expect(res.body.message).toMatch(/deleted/);
+  });
+
+  it("GET /test-db returns success", async () => {
+    const res = await request(app).get("/test-db");
+    expect(res.status).toBe(200);
+    expect(res.body.message).toMatch(/Database test successful/);
+  });
 });

@@ -3,3 +3,6 @@ node_modules/
 # Environment variables
 .env
 data/aetherpress.db
+
+# Playwright and test output
+frontend/test-results/

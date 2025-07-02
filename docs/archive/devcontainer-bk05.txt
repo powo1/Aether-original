@@ -9,7 +9,7 @@
 
   // --- LIFECYCLE HOOKS ---
   // Commands to run after the container is created.
-  "postCreateCommand": "npm install -g concurrently && npm --prefix frontend install && npm --prefix backend install && npx playwright install",
+  "postCreateCommand": "npm install -g concurrently && npm --prefix frontend install && npm --prefix backend install",
 
   // Command to run after starting the container.
   // 'concurrently' runs both dev servers with labeled output.

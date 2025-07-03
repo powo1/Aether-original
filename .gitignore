@@ -3,3 +3,4 @@ node_modules/
 # Environment variables
 .env
 data/aetherpress.db
+frontend/test-results/
